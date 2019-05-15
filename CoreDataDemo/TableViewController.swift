@@ -48,6 +48,20 @@ class TableViewController: UITableViewController {
             print(error.localizedDescription)
         }
     }
+    //Позволяет получать значение из CoreData до того как загрузится view( до того как загрузиться viewDidLoad)
+    override func viewWillAppear(_ animated: Bool) {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        
+        //Создание запроса
+        let fetchRequest: NSFetchRequest<Task> = Task.fetchRequest()
+        //Выполнение запроса
+        do {
+            toDoItems = try context.fetch(fetchRequest)
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
